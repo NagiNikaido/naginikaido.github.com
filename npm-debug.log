@@ -1,0 +1,113 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'hexo-generator-feed',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink /usr/bin/node
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'hexo-generator-feed', null ]
+7 verbose cache add name=undefined spec="hexo-generator-feed" args=["hexo-generator-feed",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'hexo-generator-feed',
+8 verbose parsed url   path: 'hexo-generator-feed',
+8 verbose parsed url   href: 'hexo-generator-feed' }
+9 silly lockFile 9a5c3fdc-hexo-generator-feed hexo-generator-feed
+10 verbose lock hexo-generator-feed /home/thomastao/.npm/9a5c3fdc-hexo-generator-feed.lock
+11 silly lockFile 9a5c3fdc-hexo-generator-feed hexo-generator-feed
+12 silly lockFile 9a5c3fdc-hexo-generator-feed hexo-generator-feed
+13 verbose addNamed [ 'hexo-generator-feed', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 99d54e98-hexo-generator-feed hexo-generator-feed@
+16 verbose lock hexo-generator-feed@ /home/thomastao/.npm/99d54e98-hexo-generator-feed.lock
+17 silly addNameRange { name: 'hexo-generator-feed', range: '*', hasData: false }
+18 verbose request where is /hexo-generator-feed
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id 9c9e2d37c50877e5
+21 verbose url raw /hexo-generator-feed
+22 verbose url resolving [ 'https://registry.npmjs.org/', './hexo-generator-feed' ]
+23 verbose url resolved https://registry.npmjs.org/hexo-generator-feed
+24 verbose request where is https://registry.npmjs.org/hexo-generator-feed
+25 info trying registry request attempt 1 at 22:37:44
+26 verbose etag "7GNG0HSVGOT48S4YT6TLD0ND4"
+27 http GET https://registry.npmjs.org/hexo-generator-feed
+28 http 200 https://registry.npmjs.org/hexo-generator-feed
+29 silly registry.get cb [ 200,
+29 silly registry.get   { date: 'Thu, 25 Sep 2014 14:37:45 GMT',
+29 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 silly registry.get     etag: '"DP9C6XYNIM1HL2ATXJO2PU18I"',
+29 silly registry.get     'content-type': 'application/json',
+29 silly registry.get     'cache-control': 'max-age=60',
+29 silly registry.get     'content-length': '15228',
+29 silly registry.get     'accept-ranges': 'bytes',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     age: '1199',
+29 silly registry.get     'x-served-by': 'cache-ty66-TYO',
+29 silly registry.get     'x-cache': 'MISS',
+29 silly registry.get     'x-cache-hits': '0',
+29 silly registry.get     'x-timer': 'S1411655865.309125,VS0,VE180',
+29 silly registry.get     vary: 'Accept',
+29 silly registry.get     'keep-alive': 'timeout=10, max=50',
+29 silly registry.get     connection: 'Keep-Alive' } ]
+30 silly addNameRange number 2 { name: 'hexo-generator-feed', range: '*', hasData: true }
+31 silly addNameRange versions [ 'hexo-generator-feed',
+31 silly addNameRange   [ '0.0.1',
+31 silly addNameRange     '0.0.2',
+31 silly addNameRange     '0.0.3',
+31 silly addNameRange     '0.0.4',
+31 silly addNameRange     '0.0.5',
+31 silly addNameRange     '0.0.6',
+31 silly addNameRange     '0.0.7',
+31 silly addNameRange     '0.0.8',
+31 silly addNameRange     '0.0.9',
+31 silly addNameRange     '0.0.10',
+31 silly addNameRange     '0.1.0',
+31 silly addNameRange     '0.1.1',
+31 silly addNameRange     '0.1.2',
+31 silly addNameRange     '0.2.0',
+31 silly addNameRange     '0.2.1' ] ]
+32 verbose addNamed [ 'hexo-generator-feed', '0.2.1' ]
+33 verbose addNamed [ '0.2.1', '0.2.1' ]
+34 silly lockFile 20e64204-hexo-generator-feed-0-2-1 hexo-generator-feed@0.2.1
+35 verbose lock hexo-generator-feed@0.2.1 /home/thomastao/.npm/20e64204-hexo-generator-feed-0-2-1.lock
+36 silly lockFile 1f8e76ad-ed-hexo-generator-feed-0-2-1-tgz https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+37 verbose lock https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz /home/thomastao/.npm/1f8e76ad-ed-hexo-generator-feed-0-2-1-tgz.lock
+38 verbose addRemoteTarball [ 'https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz',
+38 verbose addRemoteTarball   '80cee9fd7519bda06ef9dfb533ce0163d62705a9' ]
+39 info retry fetch attempt 1 at 22:37:45
+40 verbose fetch to= /tmp/npm-13733-toWsr8W2/registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+41 http GET https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+42 http 200 https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+43 silly lockFile 1f8e76ad-ed-hexo-generator-feed-0-2-1-tgz https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+44 silly lockFile 1f8e76ad-ed-hexo-generator-feed-0-2-1-tgz https://registry.npmjs.org/hexo-generator-feed/-/hexo-generator-feed-0.2.1.tgz
+45 silly lockFile 20e64204-hexo-generator-feed-0-2-1 hexo-generator-feed@0.2.1
+46 silly lockFile 20e64204-hexo-generator-feed-0-2-1 hexo-generator-feed@0.2.1
+47 silly lockFile 99d54e98-hexo-generator-feed hexo-generator-feed@
+48 silly lockFile 99d54e98-hexo-generator-feed hexo-generator-feed@
+49 error Error: EACCES, mkdir '/home/thomastao/.npm/hexo-generator-feed/0.2.1'
+49 error  { [Error: EACCES, mkdir '/home/thomastao/.npm/hexo-generator-feed/0.2.1']
+49 error   errno: 3,
+49 error   code: 'EACCES',
+49 error   path: '/home/thomastao/.npm/hexo-generator-feed/0.2.1',
+49 error   parent: 'hexo-site' }
+50 error Please try running this command again as root/Administrator.
+51 error System Linux 3.13.0-36-generic
+52 error command "/usr/bin/node" "/usr/bin/npm" "install" "hexo-generator-feed" "--save"
+53 error cwd /home/thomastao/workspace/GitHub/naginikaido.github.com
+54 error node -v v0.10.32
+55 error npm -v 1.4.28
+56 error path /home/thomastao/.npm/hexo-generator-feed/0.2.1
+57 error code EACCES
+58 error errno 3
+59 error stack Error: EACCES, mkdir '/home/thomastao/.npm/hexo-generator-feed/0.2.1'
+60 verbose exit [ 3, true ]

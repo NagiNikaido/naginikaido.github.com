@@ -87,6 +87,12 @@ theme: aoi sora
 #theme: light
 exclude_generator:
 
+# Feed
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+    
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
