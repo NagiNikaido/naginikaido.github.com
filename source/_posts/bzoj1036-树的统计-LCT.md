@@ -1,6 +1,6 @@
 title: bzoj1036 树的统计 LCT
 date: 2014-09-16 22:38:15
-tags: [省选题,数据结构]
+tags: [省选题,数据结构,bzoj]
 ---
 
 1y的LCT。对make_root操作进行了改进。
