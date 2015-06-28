@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>spoj2666 QTREE4 树链剖分 | 黒と白の境界線</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="T了五六发之后发现了问题。我把树链剖分之后的总重链条数当成 $O(log_2 n)$ 了，实际上是 $O(n)$ 的，而我原来的做法是，对于每次询问 $O(n)$ 扫一遍。这样显然会T得不成样子。至于zjoi2007 hide那题，只能认为是数据出弱了。为了方便写出了每条重链一棵线段树的形式，这样就用不着额外的合并答案了，单点修改也可以自底向上地修改了。以及这里用priority_queue+时间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spoj2666 QTREE4 树链剖分">
+<meta property="og:url" content="http://naginikaido.github.io/2014/08/27/2014-08-27-chain-spoj2666-qtree4-tree-subdivision/index.html">
+<meta property="og:site_name" content="黒と白の境界線">
+<meta property="og:description" content="T了五六发之后发现了问题。我把树链剖分之后的总重链条数当成 $O(log_2 n)$ 了，实际上是 $O(n)$ 的，而我原来的做法是，对于每次询问 $O(n)$ 扫一遍。这样显然会T得不成样子。至于zjoi2007 hide那题，只能认为是数据出弱了。为了方便写出了每条重链一棵线段树的形式，这样就用不着额外的合并答案了，单点修改也可以自底向上地修改了。以及这里用priority_queue+时间">
+<meta property="og:updated_time" content="2014-09-07T15:57:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spoj2666 QTREE4 树链剖分">
+<meta name="twitter:description" content="T了五六发之后发现了问题。我把树链剖分之后的总重链条数当成 $O(log_2 n)$ 了，实际上是 $O(n)$ 的，而我原来的做法是，对于每次询问 $O(n)$ 扫一遍。这样显然会T得不成样子。至于zjoi2007 hide那题，只能认为是数据出弱了。为了方便写出了每条重链一棵线段树的形式，这样就用不着额外的合并答案了，单点修改也可以自底向上地修改了。以及这里用priority_queue+时间">
+  
+    <link rel="alternative" href="/atom.xml" title="黒と白の境界線" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">黒と白の境界線</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">形而上的坏死</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about_me.html">About me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://naginikaido.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2014-08-27-chain-spoj2666-qtree4-tree-subdivision" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/27/2014-08-27-chain-spoj2666-qtree4-tree-subdivision/" class="article-date">
+  <time datetime="2014-08-27T01:48:00.000Z" itemprop="datePublished">8月 27 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spoj2666 QTREE4 树链剖分
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>T了五六发之后发现了问题。我把树链剖分之后的总重链条数当成 $O(log_2 n)$ 了，实际上是 $O(n)$ 的，而我原来的做法是，对于每次询问 $O(n)$ 扫一遍。这样显然会T得不成样子。至于zjoi2007 hide那题，只能认为是数据出弱了。<br>为了方便写出了每条重链一棵线段树的形式，这样就用不着额外的合并答案了，单点修改也可以自底向上地修改了。<br>以及这里用<code>priority_queue</code>+时间戳的方式完全没有问题，根本不必使用蛋疼的<code>multiset&lt;int&gt;</code>。<br><del>TODO：用边分治A之。</del><br><a id="more"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cstdio&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cstring&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;cctype&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;algorithm&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;queue&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;utility&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MaxN = <span class="number">200010</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = -<span class="number">500000000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; PII;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;PII,<span class="keyword">int</span>&gt; PPI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> Edge&#123;</span><br><span class="line">    <span class="keyword">int</span> v,c;</span><br><span class="line">    Edge *nxt;</span><br><span class="line">&#125;pool_e[MaxN],*g[MaxN],*tail_e=pool_e;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="keyword">int</span> num[MaxN],top[MaxN],fa[MaxN],h[MaxN],d[MaxN],col[MaxN];</span><br><span class="line"><span class="keyword">int</span> nxt[MaxN],size[MaxN],cnt,inv[MaxN],L[MaxN],R[MaxN];</span><br><span class="line"><span class="keyword">int</span> Time[MaxN],mapp[MaxN];</span><br><span class="line"><span class="keyword">int</span> f[MaxN][<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">priority_queue&lt;PPI&gt; heaps[MaxN],Ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">make_edge</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v,<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    tail_e-&gt;v=v;tail_e-&gt;c=c;tail_e-&gt;nxt=g[u];g[u]=tail_e++;</span><br><span class="line">    tail_e-&gt;v=u;tail_e-&gt;c=c;tail_e-&gt;nxt=g[v];g[v]=tail_e++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</span><br><span class="line">    priority_queue&lt;PPI&gt; &amp;q=heaps[u];</span><br><span class="line">    PPI a;</span><br><span class="line">    f[u][<span class="number">0</span>]=f[u][<span class="number">1</span>]=INF;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty() &amp;&amp; q.top().second!=Time[q.top().first.second]) q.pop();</span><br><span class="line">    <span class="keyword">if</span>(q.empty()) <span class="keyword">return</span> ;</span><br><span class="line">    f[u][<span class="number">0</span>]=(a=q.top()).first.first;q.pop();</span><br><span class="line">    <span class="keyword">while</span>(!q.empty() &amp;&amp; q.top().second!=Time[q.top().first.second]) q.pop();</span><br><span class="line">    <span class="keyword">if</span>(!q.empty()) f[u][<span class="number">1</span>]=q.top().first.first;</span><br><span class="line">    q.push(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> q[MaxN],l,r,u;</span><br><span class="line">    <span class="keyword">for</span>(h[q[l=r=<span class="number">1</span>]=<span class="number">1</span>]=<span class="number">1</span>;l&lt;=r;l++)</span><br><span class="line">        <span class="keyword">for</span>(Edge *p=g[u=q[l]];p;p=p-&gt;nxt) <span class="keyword">if</span>(!h[p-&gt;v])</span><br><span class="line">            fa[p-&gt;v]=u,d[p-&gt;v]=d[u]+p-&gt;c,h[q[++r]=p-&gt;v]=h[u]+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=r;i;i--)&#123;</span><br><span class="line">        size[u=q[i]]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(Edge *p=g[u];p;p=p-&gt;nxt) <span class="keyword">if</span>(fa[p-&gt;v]==u)</span><br><span class="line">            size[u]+=size[size[p-&gt;v]&gt;size[nxt[u]] ? nxt[u]=p-&gt;v : p-&gt;v];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(top[q[l=r=<span class="number">1</span>]=<span class="number">1</span>]=<span class="number">1</span>;l&lt;=r;l++)&#123;</span><br><span class="line">        inv[num[u=q[l]]=++cnt]=u;</span><br><span class="line">        <span class="keyword">if</span>(nxt[u])&#123;</span><br><span class="line">            top[q[l--]=nxt[u]]=top[u];</span><br><span class="line">            <span class="keyword">for</span>(Edge *p=g[u];p;p=p-&gt;nxt) <span class="keyword">if</span>(fa[p-&gt;v]==u &amp;&amp; nxt[u]!=p-&gt;v)</span><br><span class="line">                top[q[++r]=p-&gt;v]=p-&gt;v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) <span class="keyword">if</span>(top[i]==i) L[mapp[i]=++cnt]=num[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        R[mapp[top[i]]]=max(num[i],R[mapp[top[i]]]);</span><br><span class="line">        update(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> Node&#123;</span><br><span class="line">    <span class="keyword">int</span> l,r,mid;</span><br><span class="line">    <span class="keyword">int</span> maxl,maxr,maxans;</span><br><span class="line">    Node *lc,*rc,*fa;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l==r)&#123;</span><br><span class="line">            maxl=maxr=f[inv[l]][<span class="number">0</span>];maxans=col[inv[l]] ? f[inv[l]][<span class="number">0</span>] : INF;</span><br><span class="line">            <span class="keyword">if</span>(f[inv[l]][<span class="number">1</span>]!=INF) maxans=max(maxans,f[inv[l]][<span class="number">0</span>]+f[inv[l]][<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            maxl=max(lc-&gt;maxl,rc-&gt;maxl!=INF ? d[inv[mid+<span class="number">1</span>]]-d[inv[l]]+rc-&gt;maxl : INF);</span><br><span class="line">            maxr=max(rc-&gt;maxr,lc-&gt;maxr!=INF ? d[inv[r]]-d[inv[mid]]+lc-&gt;maxr : INF);</span><br><span class="line">            maxans=max(lc-&gt;maxans,rc-&gt;maxans);</span><br><span class="line">            <span class="keyword">if</span>(lc-&gt;maxr!=INF &amp;&amp; rc-&gt;maxr!=INF) maxans=max(maxans,lc-&gt;maxr+rc-&gt;maxl+d[inv[mid+<span class="number">1</span>]]-d[inv[mid]]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;pool[MaxN&lt;&lt;<span class="number">1</span>],*tail=pool,*pos[MaxN],*rt[MaxN];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,Node *&amp;rt)</span></span>&#123;</span><br><span class="line">    (rt=tail++)-&gt;l=l;rt-&gt;r=r;rt-&gt;mid=l+r &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(l==r) pos[l]=rt;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        build(l,rt-&gt;mid,rt-&gt;lc);rt-&gt;lc-&gt;fa=rt;</span><br><span class="line">        build(rt-&gt;mid+<span class="number">1</span>,r,rt-&gt;rc);rt-&gt;rc-&gt;fa=rt;</span><br><span class="line">    &#125;</span><br><span class="line">    rt-&gt;update();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getAns</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res=INF;</span><br><span class="line">    <span class="keyword">while</span>(!Ans.empty() &amp;&amp; Ans.top().second!=Time[Ans.top().first.second]) Ans.pop();</span><br><span class="line">    <span class="keyword">if</span>(!Ans.empty()) res=Ans.top().first.first;</span><br><span class="line">    <span class="keyword">if</span>(res==INF) <span class="built_in">puts</span>(<span class="string">"They have disappeared."</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,res);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</span><br><span class="line">    Time[u]++;</span><br><span class="line">    <span class="keyword">if</span>(col[u]=!col[u]) heaps[u].push(PPI(PII(<span class="number">0</span>,u),Time[u]));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v;u;u=fa[top[u]])&#123;</span><br><span class="line">        update(u);</span><br><span class="line">        <span class="keyword">for</span>(Node *p=pos[num[u]];p;p=p-&gt;fa) p-&gt;update();</span><br><span class="line">        ++Time[mapp[top[u]]];</span><br><span class="line">        Ans.push(PPI(PII(rt[mapp[top[u]]]-&gt;maxans,mapp[top[u]]),Time[mapp[top[u]]]));</span><br><span class="line">        <span class="keyword">if</span>((v=fa[top[u]]) &amp;&amp; rt[mapp[top[u]]]-&gt;maxl!=INF)</span><br><span class="line">            heaps[v].push(PPI(PII(rt[mapp[top[u]]]-&gt;maxl+d[top[u]]-d[v],mapp[top[u]]),Time[mapp[top[u]]]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">3500000</span>],*c_ptr;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initInput</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fread(buf,<span class="keyword">sizeof</span>(<span class="keyword">char</span>),<span class="keyword">sizeof</span>(buf),stdin);</span><br><span class="line">    c_ptr=buf;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getInt</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res=<span class="number">0</span>,flag=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(;*c_ptr &amp;&amp; !<span class="built_in">isdigit</span>(*c_ptr) &amp;&amp; *c_ptr!=<span class="string">'-'</span>;c_ptr++);</span><br><span class="line">    <span class="keyword">if</span>(*c_ptr==<span class="string">'-'</span>) flag=-<span class="number">1</span>,c_ptr++;</span><br><span class="line">    <span class="keyword">for</span>(;<span class="built_in">isdigit</span>(*c_ptr);c_ptr++) res=res*<span class="number">10</span>+*c_ptr-<span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">return</span> res*flag;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getAlpha</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(;*c_ptr &amp;&amp; !<span class="built_in">isalpha</span>(*c_ptr);c_ptr++);</span><br><span class="line">    <span class="keyword">return</span> *(c_ptr++);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    initInput();</span><br><span class="line">    n=getInt();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u,v,c;</span><br><span class="line">        u=getInt(),v=getInt(),c=getInt();</span><br><span class="line">        make_edge(u,v,c);</span><br><span class="line">    &#125;</span><br><span class="line">    dfs();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n+<span class="number">1</span>;i&lt;=cnt;i++) build(L[i],R[i],rt[i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++) modify(i);</span><br><span class="line">    m=getInt();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> a=getAlpha(),b;</span><br><span class="line">        <span class="keyword">if</span>(a==<span class="string">'A'</span>) getAns();</span><br><span class="line">        <span class="keyword">else</span> modify(b=getInt());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://naginikaido.github.io/2014/08/27/2014-08-27-chain-spoj2666-qtree4-tree-subdivision/" data-id="cibgha9f90027g07ewoe9etof" class="article-share-link">Share</a>
+      
+        <a href="http://naginikaido.github.io/2014/08/27/2014-08-27-chain-spoj2666-qtree4-tree-subdivision/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spoj/">spoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/08/28/2014-08-28-spoj2666-qtree4-partition/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          spoj2666 QTREE4 边分治
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/08/26/2014-08-26-chain-bzoj1095-zjoi2007-hide-tree-subdivision/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">bzoj1095 zjoi2007 hide 树链剖分</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/bzoj/" style="font-size: 18.33px;">bzoj</a> <a href="/tags/noi/" style="font-size: 13.33px;">noi</a> <a href="/tags/spoj/" style="font-size: 16.67px;">spoj</a> <a href="/tags/wc/" style="font-size: 10px;">wc</a> <a href="/tags/wc2013/" style="font-size: 10px;">wc2013</a> <a href="/tags/图论/" style="font-size: 11.67px;">图论</a> <a href="/tags/字符串处理/" style="font-size: 13.33px;">字符串处理</a> <a href="/tags/数学期望/" style="font-size: 10px;">数学期望</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/最小表示法/" style="font-size: 10px;">最小表示法</a> <a href="/tags/树上莫队/" style="font-size: 11.67px;">树上莫队</a> <a href="/tags/树分治/" style="font-size: 11.67px;">树分治</a> <a href="/tags/省选题/" style="font-size: 15px;">省选题</a> <a href="/tags/莫队算法/" style="font-size: 11.67px;">莫队算法</a> <a href="/tags/计算几何/" style="font-size: 10px;">计算几何</a> <a href="/tags/记忆化搜索/" style="font-size: 10px;">记忆化搜索</a> <a href="/tags/迭代法/" style="font-size: 10px;">迭代法</a> <a href="/tags/随想/" style="font-size: 10px;">随想</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/01/29/吃不完的免费开心果以及数学期望/">吃不完的免费开心果以及数学期望</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/09/bzoj3052-糖果公园-树上莫队/">bzoj3052 糖果公园 树上莫队</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/09/bzoj3757-苹果树-树上莫队/">bzoj3757 苹果树 树上莫队</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/30/bzoj1080-劣质编码-记忆化搜索-最短路/">bzoj1080 劣质编码 记忆化搜索 最短路</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/28/bzoj1073-Kth-shortest-path-Yens-algorithm/">bzoj1073 Kth shortest path  Yen&#39;s algorithm</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://footoredo.ga/" target="_blank">鯨歌</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap license">
+  <h3 class="widget-title"> License </h3>
+  <div class="widget">
+  	<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />本博客中的所有文章，如非注明，均采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可。</p>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"> Background Music </h3>
+  <div class="widget">
+     <script src="http://www.xiami.com/widget/player-dynamic?uid=30313531&id=38217287&width=235&height=346&mainColor=cccccc&backColor=dddddd&type=collect&autoplay=1&mode=js"></script>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Nagi Nikaido<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about_me.html" class="mobile-nav-link">About me</a>
+  
+</nav>
+    <% if (config.disqus_shortname){ %>
+<script>
+  var disqus_shortname = '<%= config.disqus_shortname %>';
+  <% if (page.permalink){ %>
+  var disqus_url = '<%= page.permalink %>';
+  <% } %>
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/<% if (page.comments) { %>embed.js<% } else { %>count.js<% } %>';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<% } %>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjscn.b0.upaiyun.com/libs/mathjax/2.4.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://www.zybuluo.com/static/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<% if (theme.fancybox){ %>
+  <%- css('fancybox/jquery.fancybox') %>
+  <%- js('fancybox/jquery.fancybox.pack') %>
+<% } %>
+
+<%- js('js/script') %>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>黒と白の境界線</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="黒と白の境界線">
+<meta property="og:url" content="http://naginikaido.github.io/page/3/index.html">
+<meta property="og:site_name" content="黒と白の境界線">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="黒と白の境界線">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="黒と白の境界線" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">黒と白の境界線</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">形而上的坏死</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about_me.html">About me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://naginikaido.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-2014-08-23-noi2003-editor-function-treap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/23/2014-08-23-noi2003-editor-function-treap/" class="article-date">
+  <time datetime="2014-08-23T05:12:00.000Z" itemprop="datePublished">8月 23 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/23/2014-08-23-noi2003-editor-function-treap/">noi2003 editor 函数式treap</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>函数式treap的版本。不加gc就会MLE。</p>
+<p>值得注意的是，这里为了能直接依据一个字符串获得一个Treap，需要使用一些手段。原因是treap需要在每个节点上附加一个随机权值weight，这为不使用旋转操作直接得到treap设下了障碍。而一个一个字符插入又是极不经济的，因此在<code>merge(Node *a,Node *b)</code>中使用下面的方法：</p>
+<p>roll出一个在$[ 0 , size(a)+size(b) )$内的整数$p$。如果$p&lt;size(a)$,就将b挂到a下面，否则将a挂到b下面。</p>
+<p>这是CLJ提到过的方法，这样可以避免使用weight，就可以直接使用和splay一样的<code>init()</code>了。</p>
+<p>如果不使用gc的话会爆空间。这里我使用了<a href="http://baike.baidu.com/view/4163962.htm?fr=aladdin">引用计数</a>的方法，就是说对于每一个节点，用<code>cnt</code>记录它是多少个节点的后继。如果cnt=0，就说明这个点是可以被回收的。由于这里的<code>Insert()</code>和<code>Remove()</code>调用次数较少，一共最多只有4000次，因此我只在<code>Get()</code>里使用了<code>relax()</code>操作。</p>
+        
+          <p class="article-more-link">
+            <a href="/2014/08/23/2014-08-23-noi2003-editor-function-treap/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://naginikaido.github.io/2014/08/23/2014-08-23-noi2003-editor-function-treap/" data-id="cibgha9fv002yg07e1t8caye8" class="article-share-link">Share</a>
+      
+        <a href="http://naginikaido.github.io/2014/08/23/2014-08-23-noi2003-editor-function-treap/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/noi/">noi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-08-23-linux-process" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/23/2014-08-23-linux-process/" class="article-date">
+  <time datetime="2014-08-23T02:55:00.000Z" itemprop="datePublished">8月 23 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/23/2014-08-23-linux-process/">Linux进程相关</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近为了搞judger，开始研究这些东西了。。。（为了能够掐程序）虽然可能会坑掉（擦汗）。</p>
+<h2 id="1-_fork函数">1. fork函数</h2><p>fork()的效果是创建一个新进程，然后：</p>
+<ol>
+<li>创建失败，返回error信息;</li>
+<li>创建成功，且在父进程中，返回子进程的pid;</li>
+<li>创建成功，且在子进程中，返回0</li>
+</ol>
+<p>于是可以：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pid_t</span> fid=fork();</span><br><span class="line"> <span class="keyword">if</span>(fid==-<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> <span class="keyword">if</span>(fid==<span class="number">0</span>)&#123;</span><br><span class="line"> 	运行要监控的程序</span><br><span class="line">&#125;</span><br><span class="line"> <span class="keyword">else</span>&#123;</span><br><span class="line"> 	进行监控</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://naginikaido.github.io/2014/08/23/2014-08-23-linux-process/" data-id="cibgha9g00033g07e4unetp8s" class="article-share-link">Share</a>
+      
+        <a href="http://naginikaido.github.io/2014/08/23/2014-08-23-linux-process/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-08-23-noi2003-editor-splay" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/23/2014-08-23-noi2003-editor-splay/" class="article-date">
+  <time datetime="2014-08-23T02:43:00.000Z" itemprop="datePublished">8月 23 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/23/2014-08-23-noi2003-editor-splay/">noi2003 editor splay</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>splay版本。没有使用getInterval操作，而是直接使用了split和join操作。这样可以避免很多的边界情况，更加好写好想好调。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/08/23/2014-08-23-noi2003-editor-splay/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://naginikaido.github.io/2014/08/23/2014-08-23-noi2003-editor-splay/" data-id="cibgha9fs002tg07evrpp0t4n" class="article-share-link">Share</a>
+      
+        <a href="http://naginikaido.github.io/2014/08/23/2014-08-23-noi2003-editor-splay/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/noi/">noi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-08-22-noi2003-editor-block-list" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/22/2014-08-22-noi2003-editor-block-list/" class="article-date">
+  <time datetime="2014-08-22T06:56:00.000Z" itemprop="datePublished">8月 22 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/22/2014-08-22-noi2003-editor-block-list/">noi2003 editor 块状链表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>正确性没有问题，但T得飞起的块链版本。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/08/22/2014-08-22-noi2003-editor-block-list/#more">阅读更多</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://naginikaido.github.io/2014/08/22/2014-08-22-noi2003-editor-block-list/" data-id="cibgha9cs0000g07e0l93if3j" class="article-share-link">Share</a>
+      
+        <a href="http://naginikaido.github.io/2014/08/22/2014-08-22-noi2003-editor-block-list/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/noi/">noi</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/bzoj/" style="font-size: 18.33px;">bzoj</a> <a href="/tags/noi/" style="font-size: 13.33px;">noi</a> <a href="/tags/spoj/" style="font-size: 16.67px;">spoj</a> <a href="/tags/wc/" style="font-size: 10px;">wc</a> <a href="/tags/wc2013/" style="font-size: 10px;">wc2013</a> <a href="/tags/图论/" style="font-size: 11.67px;">图论</a> <a href="/tags/字符串处理/" style="font-size: 13.33px;">字符串处理</a> <a href="/tags/数学期望/" style="font-size: 10px;">数学期望</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/最小表示法/" style="font-size: 10px;">最小表示法</a> <a href="/tags/树上莫队/" style="font-size: 11.67px;">树上莫队</a> <a href="/tags/树分治/" style="font-size: 11.67px;">树分治</a> <a href="/tags/省选题/" style="font-size: 15px;">省选题</a> <a href="/tags/莫队算法/" style="font-size: 11.67px;">莫队算法</a> <a href="/tags/计算几何/" style="font-size: 10px;">计算几何</a> <a href="/tags/记忆化搜索/" style="font-size: 10px;">记忆化搜索</a> <a href="/tags/迭代法/" style="font-size: 10px;">迭代法</a> <a href="/tags/随想/" style="font-size: 10px;">随想</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/01/29/吃不完的免费开心果以及数学期望/">吃不完的免费开心果以及数学期望</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/09/bzoj3052-糖果公园-树上莫队/">bzoj3052 糖果公园 树上莫队</a>
+          </li>
+        
+          <li>
+            <a href="/2015/01/09/bzoj3757-苹果树-树上莫队/">bzoj3757 苹果树 树上莫队</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/30/bzoj1080-劣质编码-记忆化搜索-最短路/">bzoj1080 劣质编码 记忆化搜索 最短路</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/28/bzoj1073-Kth-shortest-path-Yens-algorithm/">bzoj1073 Kth shortest path  Yen&#39;s algorithm</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://footoredo.ga/" target="_blank">鯨歌</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap license">
+  <h3 class="widget-title"> License </h3>
+  <div class="widget">
+  	<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />本博客中的所有文章，如非注明，均采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可。</p>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"> Background Music </h3>
+  <div class="widget">
+     <script src="http://www.xiami.com/widget/player-dynamic?uid=30313531&id=38217287&width=235&height=346&mainColor=cccccc&backColor=dddddd&type=collect&autoplay=1&mode=js"></script>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Nagi Nikaido<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about_me.html" class="mobile-nav-link">About me</a>
+  
+</nav>
+    <% if (config.disqus_shortname){ %>
+<script>
+  var disqus_shortname = '<%= config.disqus_shortname %>';
+  <% if (page.permalink){ %>
+  var disqus_url = '<%= page.permalink %>';
+  <% } %>
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/<% if (page.comments) { %>embed.js<% } else { %>count.js<% } %>';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<% } %>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjscn.b0.upaiyun.com/libs/mathjax/2.4.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://www.zybuluo.com/static/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<% if (theme.fancybox){ %>
+  <%- css('fancybox/jquery.fancybox') %>
+  <%- js('fancybox/jquery.fancybox.pack') %>
+<% } %>
+
+<%- js('js/script') %>
+
+  </div>
+</body>
+</html>
